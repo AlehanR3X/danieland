@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertencia de Seguridad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Great+Vibes&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .countdown {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: #ff0000;
+            font-family: 'VT323', monospace;
+            display: none; /* Oculto inicialmente */
+        }
+        .next-button {
+            display: none; /* Oculto inicialmente */
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Sans-serif'; /* Tipo de letra Sans-serif */
+        }
+        .warning-container {
+            text-align: center;
+            background-color: #000; /* Fondo negro */
+            border: 5px solid #ff0000;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+        .warning-container h1 {
+            color: #ff0000;
+            font-size: 2.5rem;
+            margin: 0;
+            font-family: 'VT323', monospace; /* Tipo de letra que simula un error */
+        }
+        .warning-container p {
+            color: #fff; /* Texto blanco */
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+        .warning-icon {
+            font-size: 4rem;
+            color: #ff0000;
+            margin-bottom: 1rem;
+        }
+        .input-container {
+            margin-top: 1rem;
+        }
+        .input-container input {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+        }
+        .input-container button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-container">
+        <div class="warning-icon">⚠️</div>
+        <h1>Sistema comprometido</h1>
+        <p>Introduzca la clave para desbloquear.</p>
+        <div class="input-container">
+            <input type="date" id="key-input" placeholder="Fecha en que nos conocimos">
+            <button onclick="validateKey()">Desbloquear</button>
+        </div>
+    </div>
+
+    <div class="container" style="display: none;">
+        <div class="countdown" id="countdown">00:30</div>
+        <h1 style="font-family: 'Great Vibes', cursive;">¡Feliz San Valentín! ❤️</h1>
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="text">
+                        <strong>Querida Estrella</strong>
+                        <p>
+                            Hoy es <strong>San Valentín</strong>, el día oficial de los <em>corazones</em>, el <em>chocolate</em> y las declaraciones de amor dramáticas (como en las telenovelas). Así que prepárate, porque aquí va la mía: Desde que te conocí, mi corazón late más rápido que <code>WiFi</code> gratis en una plaza pública. Eres más brillante que un mensaje de "<strong>te amo</strong>" en <strong>LED gigante</strong> y más dulce que el doble de caramelo en un café con extra de crema. Si fueras un algoritmo, serías el más eficiente: optimizas mi felicidad con la menor cantidad de esfuerzo. Si fueras un bug, serías el único que no querría corregir. Y si fueras una aplicación, serías la que siempre tengo anclada en mi pantalla principal. Gracias por hacer de mi vida una versión mejorada, sin errores (bueno, quizá con algunos, pero todos adorables). <br> <strong>Feliz San Valentín</strong>, mi <em>estrella favorita</em>. <br> Con mucho <strong>código</strong> (y <strong>amor</strong>), <br> Tu programador enamorado. <br> <span style="font-size: 0.9em; color: grey;">PD: Si esta carta fuera un programa, su salida sería:</span> <br> <code>"Eres lo mejor que me ha pasado."</code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="heart"></div>
+            <div class="tap-right"></div>
+            <div class="tap-left"></div>
+        </div>
+        <button class="next-button" id="next-button" onclick="goToNextPage()">SIGUIENTE</button>
+    </div>
+
+    <script>
+        function validateKey() {
+            const correctDate = '2023-02-14'; // Cambia esta fecha a la correcta
+            const inputDate = document.getElementById('key-input').value;
+            if (inputDate === correctDate) {
+                document.querySelector('.warning-container').style.display = 'none';
+                document.querySelector('.container').style.display = 'block';
+                startCountdown(); // Iniciar el contador de cuenta regresiva
+            } else {
+                alert('Clave incorrecta. Inténtelo de nuevo.');
+            }
+        }
+
+        const envelope = document.querySelector('.envelope-wrapper');
+        const letter = document.querySelector('.letter');
+
+        document.addEventListener('click', (e) => {
+            if (
+                e.target.matches(".envelope") || 
+                e.target.matches(".tap-right") || 
+                e.target.matches(".tap-left") || 
+                e.target.matches(".heart")
+            ) {
+                envelope.classList.toggle('flap');
+            } else if (e.target.matches(".envelope *")) {
+                if (!letter.classList.contains('opened')) {
+                    letter.classList.add("letter-opening");
+
+                    setTimeout(() => {
+                        letter.classList.remove('letter-opening');
+                        letter.classList.add('opened');
+                    }, 500);
+                    envelope.classList.add("disable-envelope")
+                } else {
+                    letter.classList.add('closing-letter')
+                    envelope.classList.remove("disable-envelope")
+                    letter.classList.remove('opened')
+                    setTimeout(() => {
+                        letter.classList.remove('closing-letter');
+                        letter.classList.remove('opened');
+                    }, 500);
+                }
+            }
+        });
+
+        function startCountdown() {
+            let countdown = 30;
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.style.display = 'block'; // Mostrar el contador
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                const minutes = Math.floor(countdown / 60);
+                const seconds = countdown % 60;
+                countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (countdown === 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('next-button').style.display = 'block'; // Mostrar el botón SIGUIENTE
+                }
+            }, 1000);
+        }
+
+        function goToNextPage() {
+            window.location.href = 'sorpresa.html'; // Cambia a la URL de la nueva página
+        }
+    </script>
+</body>
+</html>
